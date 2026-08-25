@@ -1,0 +1,539 @@
+:root {
+  --pika-yellow: #ffcb05;
+  --pika-yellow-dark: #f0b400;
+  --pika-blue: #3b4cca;
+  --pika-red: #ee1515;
+  --bg-sky: #eaf6ff;
+  --green: #4caf50;
+  --gray: #9aa0a6;
+  --card-radius: 18px;
+  --shadow: 0 6px 0 rgba(0, 0, 0, 0.15);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Trebuchet MS', 'Segoe UI', Verdana, sans-serif;
+  background: var(--bg-sky);
+  color: #2b2b2b;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.btn {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 0.7rem 1.4rem;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  color: #fff;
+  box-shadow: var(--shadow);
+  transition: transform 0.1s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
+}
+.btn-primary {
+  background: var(--pika-blue);
+}
+.btn-secondary {
+  background: var(--pika-yellow-dark);
+  color: #2b2b2b;
+}
+.btn-danger {
+  background: var(--pika-red);
+}
+.btn-icon {
+  padding: 0.6rem 0.8rem;
+  border-radius: 50%;
+}
+.btn-small {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.85rem;
+  margin-right: 0.4rem;
+  box-shadow: none;
+}
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Menu screen ---------- */
+.menu-body {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, #fff6d8 0%, var(--bg-sky) 70%);
+}
+.menu-screen {
+  text-align: center;
+  background: #fff;
+  padding: 3rem 3.5rem;
+  border-radius: var(--card-radius);
+  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.1);
+  border: 4px solid var(--pika-yellow);
+}
+.game-logo {
+  color: var(--pika-blue);
+  font-size: 2.2rem;
+  text-shadow: 2px 2px 0 var(--pika-yellow);
+  margin-bottom: 0.2rem;
+}
+.game-subtitle {
+  color: #666;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+.menu-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: stretch;
+}
+.admin-link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  color: var(--pika-blue);
+  font-size: 0.85rem;
+}
+
+/* ---------- Modals ---------- */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+.modal-card {
+  background: #fff;
+  border-radius: var(--card-radius);
+  padding: 2rem;
+  min-width: 320px;
+  max-width: 90vw;
+  text-align: center;
+  border: 4px solid var(--pika-yellow);
+  box-shadow: 0 10px 0 rgba(0, 0, 0, 0.15);
+}
+.setting-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 1.5rem 0;
+  font-size: 1.05rem;
+}
+
+/* ---------- HUD / Game screen ---------- */
+.game-body {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--pika-blue);
+  color: #fff;
+  padding: 0.8rem 1.5rem;
+  font-weight: 700;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.hud-item {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+}
+.hud-actions {
+  display: flex;
+  gap: 0.6rem;
+}
+.map-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  overflow: hidden;
+}
+#mapSvg {
+  width: 100%;
+  max-width: 900px;
+  height: 100%;
+  max-height: 80vh;
+}
+
+/* Edges */
+.edge-line {
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+.edge-normal {
+  stroke: var(--green);
+}
+.edge-locked {
+  stroke: var(--pika-red);
+}
+.edge-completed {
+  stroke: var(--gray);
+}
+
+/* Nodes */
+.node-circle {
+  fill: #fff;
+  stroke: var(--pika-blue);
+  stroke-width: 3;
+}
+.node-label {
+  font-size: 16px;
+  font-weight: 700;
+  text-anchor: middle;
+  fill: var(--pika-blue);
+}
+.node-group {
+  cursor: default;
+}
+.node-group.reachable {
+  cursor: pointer;
+}
+.node-group.reachable .node-circle {
+  stroke: var(--green);
+  stroke-width: 5;
+  filter: drop-shadow(0 0 6px var(--green));
+  animation: pulseNode 0.9s ease-in-out infinite;
+}
+.node-group.current .node-circle {
+  fill: var(--pika-yellow);
+}
+@keyframes pulseNode {
+  0%, 100% { r: 22; stroke-width: 4; filter: drop-shadow(0 0 3px var(--green)); }
+  50% { r: 30; stroke-width: 7; filter: drop-shadow(0 0 12px var(--green)); }
+}
+
+/* Items sit inside their node cell, on top of the node circle. */
+.item-icon {
+  font-size: 22px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+}
+
+/* Treasure chest marker permanently shown at the END node. */
+.chest-icon {
+  font-size: 24px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+}
+
+/* Pikachu sprite */
+#pikachu .pikachu-body {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: idleBounce 2s ease-in-out infinite;
+}
+#pikachu.walking .pikachu-body {
+  animation: walkBounce 0.25s ease-in-out infinite;
+}
+#pikachu.victory .pikachu-body {
+  animation: victorySpin 1s ease-in-out infinite;
+}
+.pikachu-head {
+  fill: var(--pika-yellow);
+  stroke: #2b2b2b;
+  stroke-width: 1.5;
+}
+.pikachu-ear {
+  fill: var(--pika-yellow);
+  stroke: #2b2b2b;
+  stroke-width: 1.5;
+}
+.pikachu-cheek {
+  fill: var(--pika-red);
+  opacity: 0.85;
+}
+.pikachu-eye {
+  fill: #2b2b2b;
+}
+.crown-icon {
+  font-size: 26px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+#pikachu.victory .crown-icon {
+  opacity: 1;
+  animation: crownBounce 1s ease-in-out infinite;
+}
+@keyframes idleBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+@keyframes walkBounce {
+  0%, 100% { transform: scaleY(1) translateY(0); }
+  50% { transform: scaleY(0.9) translateY(2px); }
+}
+@keyframes victorySpin {
+  0% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(15deg); }
+  100% { transform: translateY(0) rotate(-15deg); }
+}
+@keyframes crownBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Toast */
+.toast {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #2b2b2b;
+  color: #fff;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
+
+/* Quiz */
+.quiz-card {
+  min-width: 380px;
+  max-width: 640px;
+  padding: 2.5rem;
+}
+.quiz-card #quizQuestion {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin: 1.2rem 0;
+}
+.quiz-option {
+  font-family: inherit;
+  font-size: 1.3rem;
+  padding: 0.9rem 1.2rem;
+  border: 2px solid var(--pika-blue);
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+  text-align: left;
+}
+.quiz-option.selected {
+  background: var(--pika-yellow);
+  border-color: var(--pika-yellow-dark);
+}
+
+/* Matching quiz (drag-free click-to-connect columns) */
+.quiz-matching {
+  display: flex;
+  gap: 6rem;
+  justify-content: center;
+  margin: 1.2rem 0;
+  position: relative;
+}
+.match-col {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  flex: 1;
+  position: relative;
+  z-index: 1;
+}
+.match-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+.match-line {
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+.match-line-pending {
+  stroke: var(--pika-blue);
+}
+.match-line-correct {
+  stroke: var(--green);
+}
+.match-line-wrong {
+  stroke: var(--pika-red);
+}
+.match-item {
+  font-family: inherit;
+  font-size: 1.5rem;
+  padding: 0.8rem 1rem;
+  border: 2px solid var(--pika-blue);
+  border-radius: 12px;
+  background: #fff;
+  cursor: pointer;
+  text-align: center;
+  white-space: pre-line;
+  line-height: 1.5;
+  transition: transform 0.1s ease;
+}
+.match-item.selected {
+  background: var(--pika-yellow);
+  border-color: var(--pika-yellow-dark);
+}
+.match-item.matched {
+  background: #e3f7e6;
+  border-color: var(--green);
+  color: #256029;
+  cursor: default;
+  opacity: 0.85;
+}
+.match-item.wrong-flash {
+  background: #fde3e3;
+  border-color: var(--pika-red);
+  animation: matchShake 0.4s ease;
+}
+.match-item:disabled {
+  cursor: default;
+}
+@keyframes matchShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+
+.quiz-result {
+  margin-top: 1rem;
+  font-weight: 700;
+  font-size: 1.3rem;
+  padding: 0.8rem;
+  border-radius: 10px;
+}
+.quiz-correct {
+  background: #e3f7e6;
+  color: #256029;
+}
+.quiz-wrong {
+  background: #fde3e3;
+  color: #a12626;
+}
+
+/* Win modal */
+.win-card .crown {
+  font-size: 3rem;
+  animation: crownBounce 1s ease-in-out infinite;
+}
+.win-score {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--pika-blue);
+}
+
+/* ---------- Admin ---------- */
+.admin-body {
+  padding: 1.5rem 2rem 3rem;
+  max-width: 960px;
+  margin: 0 auto;
+}
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.admin-main section {
+  background: #fff;
+  border: 2px solid #eee;
+  border-radius: var(--card-radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+#questionForm label,
+.admin-import-section label {
+  display: block;
+  margin-bottom: 0.8rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+#questionForm textarea,
+.admin-import-section textarea,
+#questionForm input[type='text'] {
+  width: 100%;
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: 2px solid #ddd;
+  margin-top: 0.3rem;
+}
+.options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+.field-hint {
+  font-size: 0.85rem;
+  color: #666;
+  margin: -0.4rem 0 0.8rem;
+}
+.pairs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+}
+.pairs-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.pairs-grid input {
+  margin-top: 0;
+}
+.form-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1rem;
+}
+.admin-import-section textarea {
+  min-height: 90px;
+  font-family: monospace;
+}
+.import-message {
+  margin-top: 0.6rem;
+  font-weight: 700;
+}
+.question-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.question-table th,
+.question-table td {
+  border-bottom: 1px solid #eee;
+  padding: 0.6rem;
+  text-align: left;
+  font-size: 0.9rem;
+  vertical-align: top;
+}
+.question-table th {
+  color: var(--pika-blue);
+}

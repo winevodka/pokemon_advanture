@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Question Bank Admin</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="admin-body">
+  <header class="admin-header">
+    <h1>📚 Question Bank Admin</h1>
+    <a href="index.html" class="btn btn-secondary">Back to Menu</a>
+  </header>
+
+  <main class="admin-main">
+    <section class="admin-form-section">
+      <h2 id="formTitle">Add Question</h2>
+      <form id="questionForm">
+        <input type="hidden" id="questionId" />
+        <label>Question Type
+          <select id="questionType">
+            <option value="multiple-choice">Multiple Choice (4 options)</option>
+            <option value="matching">Matching (connect pairs)</option>
+          </select>
+        </label>
+        <label>Question
+          <textarea id="questionText" required maxlength="500"></textarea>
+        </label>
+
+        <div id="multipleChoiceFields">
+          <div class="options-grid">
+            <label>Option A <input type="text" class="optionInput" data-index="0" maxlength="200" /></label>
+            <label>Option B <input type="text" class="optionInput" data-index="1" maxlength="200" /></label>
+            <label>Option C <input type="text" class="optionInput" data-index="2" maxlength="200" /></label>
+            <label>Option D <input type="text" class="optionInput" data-index="3" maxlength="200" /></label>
+          </div>
+          <label>Correct Answer
+            <select id="correctAnswer">
+              <option value="0">Option A</option>
+              <option value="1">Option B</option>
+              <option value="2">Option C</option>
+              <option value="3">Option D</option>
+            </select>
+          </label>
+        </div>
+
+        <div id="matchingFields" class="hidden">
+          <p class="field-hint">Enter matching pairs (e.g. left = "🍎🍎", right = "2"). Right-side order is shuffled automatically in-game.</p>
+          <div class="pairs-grid">
+            <label>Pair 1
+              <input type="text" class="pairLeftInput" data-index="0" maxlength="100" placeholder="Left (e.g. 🍎🍎)" />
+              <input type="text" class="pairRightInput" data-index="0" maxlength="100" placeholder="Right (e.g. 2)" />
+            </label>
+            <label>Pair 2
+              <input type="text" class="pairLeftInput" data-index="1" maxlength="100" placeholder="Left" />
+              <input type="text" class="pairRightInput" data-index="1" maxlength="100" placeholder="Right" />
+            </label>
+            <label>Pair 3
+              <input type="text" class="pairLeftInput" data-index="2" maxlength="100" placeholder="Left" />
+              <input type="text" class="pairRightInput" data-index="2" maxlength="100" placeholder="Right" />
+            </label>
+            <label>Pair 4
+              <input type="text" class="pairLeftInput" data-index="3" maxlength="100" placeholder="Left" />
+              <input type="text" class="pairRightInput" data-index="3" maxlength="100" placeholder="Right" />
+            </label>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" id="submitBtn">Add Question</button>
+          <button type="button" class="btn btn-secondary hidden" id="cancelEditBtn">Cancel Edit</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="admin-import-section">
+      <h2>Import Questions (JSON)</h2>
+      <textarea id="importText" placeholder='[{"type":"multiple-choice","question":"Capital of France?","options":["Paris","London","Rome","Berlin"],"correctAnswer":0}]'></textarea>
+      <button id="importBtn" class="btn btn-primary">Import</button>
+      <div id="importMessage" class="import-message"></div>
+    </section>
+
+    <section class="admin-list-section">
+      <h2>Questions</h2>
+      <table class="question-table">
+        <thead>
+          <tr><th>ID</th><th>Type</th><th>Question</th><th>Options / Pairs</th><th>Correct</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="questionTableBody"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script type="module" src="js/admin.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pokémon Learning Adventure — Game</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="game-body">
+  <header class="hud">
+    <div class="hud-item">Questions: <span id="questionsValue">0/0</span></div>
+    <div class="hud-actions">
+      <button id="btnMusicToggle" class="btn btn-icon" title="Toggle music">🔊</button>
+      <button id="btnRestart" class="btn btn-secondary">Restart</button>
+      <a href="index.html" class="btn btn-secondary">Menu</a>
+    </div>
+  </header>
+
+  <main class="map-wrapper">
+    <svg id="mapSvg" viewBox="0 0 730 620" preserveAspectRatio="xMidYMid meet"></svg>
+    <div id="toast" class="toast hidden"></div>
+  </main>
+
+  <div id="quizModal" class="modal hidden">
+    <div class="modal-card quiz-card">
+      <h2 id="quizQuestion">Question</h2>
+      <div id="quizOptions" class="quiz-options"></div>
+      <div id="quizMatching" class="quiz-matching hidden">
+        <div id="matchLeftCol" class="match-col"></div>
+        <svg id="matchLinesSvg" class="match-lines"></svg>
+        <div id="matchRightCol" class="match-col"></div>
+      </div>
+      <div id="quizResult" class="quiz-result hidden"></div>
+    </div>
+  </div>
+
+  <div id="stuckModal" class="modal hidden">
+    <div class="modal-card">
+      <h2>😵 No Path Available</h2>
+      <p>All remaining routes from here are locked. Restart to try again.</p>
+      <button id="stuckRestart" class="btn btn-primary">Restart Game</button>
+    </div>
+  </div>
+
+  <div id="winModal" class="modal hidden">
+    <div class="modal-card win-card">
+      <div class="crown">👑</div>
+      <h2>🎉 Congratulations!</h2>
+      <p>You reached the destination.</p>
+      <button id="winRestart" class="btn btn-primary">Play Again</button>
+      <a href="index.html" class="btn btn-secondary">Main Menu</a>
+    </div>
+  </div>
+
+  <script type="module" src="js/game.js"></script>
+</body>
+</html>

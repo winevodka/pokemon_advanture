@@ -1,0 +1,13 @@
+{
+  "name": "pokemon-learning-adventure",
+  "version": "1.0.0",
+  "description": "Pokemon-style educational webgame combining quiz answering and map navigation, served from a local Express server.",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
