@@ -331,13 +331,17 @@ function renderMatchingQuiz(q) {
   matchLinesSvg.innerHTML = '';
 
   const MAX_PER_LINE = 5;
-  function formatItemDisplay(text) {
+  function buildItemContent(text) {
+    const wrap = document.createElement('span');
+    wrap.className = 'match-item-content';
     const chars = Array.from(text);
-    const lines = [];
     for (let i = 0; i < chars.length; i += MAX_PER_LINE) {
-      lines.push(chars.slice(i, i + MAX_PER_LINE).join(''));
+      const row = document.createElement('span');
+      row.className = 'match-row';
+      row.textContent = chars.slice(i, i + MAX_PER_LINE).join('');
+      wrap.appendChild(row);
     }
-    return lines.join('\n');
+    return wrap;
   }
 
   const rightOrder = shuffleArray(q.pairs.map((_, idx) => idx));
@@ -405,7 +409,7 @@ function renderMatchingQuiz(q) {
     const btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'match-item';
-    btn.textContent = formatItemDisplay(pair.left);
+    btn.appendChild(buildItemContent(pair.left));
     btn.addEventListener('click', () => {
       if (answered) return;
       if (selectedLeft) selectedLeft.el.classList.remove('selected');
