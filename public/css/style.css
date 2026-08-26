@@ -150,6 +150,7 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 .hud {
   display: flex;
@@ -466,6 +467,59 @@ body {
   color: #a12626;
 }
 
+/* ---------- Game 2: standalone matching game ---------- */
+.match-game-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1rem 2.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+.match-game-title {
+  color: var(--pika-blue);
+  text-align: center;
+  margin: 0 0 1.5rem;
+}
+.match-game-board {
+  display: flex;
+  gap: 11rem;
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+.match-game-board .match-col {
+  gap: 1rem;
+}
+#matchRightCol2 {
+  align-items: center;
+  flex: none;
+}
+.match-game-board .match-item {
+  font-size: 1.7rem;
+  padding: 0.8rem 1.2rem;
+  height: 6.2rem;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.match-game-board .match-item-number {
+  width: 6.2rem;
+  height: 6.2rem;
+  padding: 0;
+  font-size: 1.7rem;
+}
+.match-game-board .match-row {
+  font-size: 1.5rem;
+  letter-spacing: 5px;
+}
+
 /* ---------- Mobile responsiveness ---------- */
 @media (max-width: 600px) {
   .modal-card {
@@ -528,53 +582,26 @@ body {
   }
 }
 
-/* ---------- Game 2: standalone matching game ---------- */
-.match-game-wrapper {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 1.5rem 1rem 2.5rem;
-  overflow-y: auto;
-}
-.match-game-title {
-  color: var(--pika-blue);
-  text-align: center;
-  margin: 0 0 1.5rem;
-}
-.match-game-board {
-  display: flex;
-  gap: 11rem;
-  position: relative;
-  width: 100%;
-  max-width: 1000px;
-  margin: 0 auto;
-}
-.match-game-board .match-col {
-  gap: 1rem;
-}
-#matchRightCol2 {
-  align-items: center;
-  flex: none;
-}
-.match-game-board .match-item {
-  font-size: 1.7rem;
-  padding: 0.8rem 0.9rem;
-  height: 6.2rem;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.match-game-board .match-item-number {
-  width: 6.2rem;
-  height: 6.2rem;
-  padding: 0;
-  font-size: 1.7rem;
-}
-.match-game-board .match-row {
-  font-size: 1.5rem;
-  letter-spacing: 2px;
+@media (max-width: 400px) {
+  .match-game-board {
+    gap: 1rem;
+  }
+  .match-game-board .match-col {
+    gap: 0.6rem;
+  }
+  .match-game-board .match-item {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.2rem;
+    height: 3.2rem;
+  }
+  .match-game-board .match-item-number {
+    width: 3.2rem;
+    height: 3.2rem;
+    font-size: 0.85rem;
+  }
+  .match-game-board .match-row {
+    font-size: 0.55rem;
+  }
 }
 
 /* Win modal */
