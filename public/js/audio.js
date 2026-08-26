@@ -5,6 +5,7 @@ class AudioManager {
   constructor() {
     this.ctx = null;
     this.musicOn = true;
+    this.musicEl = null;
     this.musicNodes = null;
   }
 
@@ -55,6 +56,26 @@ class AudioManager {
   }
 
   startMusic() {
+    if (!this.musicOn || this.musicEl || this.musicNodes) return;
+    try {
+      const el = new Audio('assets/audio/bgm.mp3');
+      el.loop = true;
+      el.volume = 0.3;
+      el.addEventListener('error', () => {
+        // File missing/failed to load — fall back to synthesized music.
+        this.musicEl = null;
+        this.startSynthMusic();
+      });
+      el.play().catch(() => {
+        /* Browser blocked autoplay until user interacts; ignore */
+      });
+      this.musicEl = el;
+    } catch {
+      this.startSynthMusic();
+    }
+  }
+
+  startSynthMusic() {
     if (!this.musicOn || this.musicNodes) return;
     try {
       const ctx = this.ensureContext();
@@ -72,6 +93,11 @@ class AudioManager {
   }
 
   stopMusic() {
+    if (this.musicEl) {
+      this.musicEl.pause();
+      this.musicEl.currentTime = 0;
+      this.musicEl = null;
+    }
     if (this.musicNodes) {
       try {
         this.musicNodes.osc.stop();

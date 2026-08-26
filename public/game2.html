@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Pokémon Learning Adventure — Nối Hình</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="game-body">
+  <header class="hud">
+    <div class="hud-item">Đã nối: <span id="matchedValue">0/5</span></div>
+    <div class="hud-actions">
+      <button id="btnMusicToggle" class="btn btn-icon" title="Toggle music">🔊</button>
+      <button id="btnRestart" class="btn btn-secondary">Chơi lại</button>
+      <a href="index.html" class="btn btn-secondary">Menu</a>
+    </div>
+  </header>
+
+  <main class="match-game-wrapper">
+    <h2 class="match-game-title">Nối số lượng đồ vật với con số tương ứng</h2>
+    <div class="match-game-board">
+      <div id="matchLeftCol2" class="match-col"></div>
+      <svg id="matchLinesSvg2" class="match-lines"></svg>
+      <div id="matchRightCol2" class="match-col"></div>
+    </div>
+  </main>
+
+  <div id="winModal2" class="modal hidden">
+    <div class="modal-card win-card">
+      <h2>🎉 Hoàn thành!</h2>
+      <p>Bạn đã nối đúng tất cả 5 cặp!</p>
+      <div class="form-actions">
+        <button id="winRestart2" class="btn btn-primary">Chơi lại</button>
+        <a href="index.html" class="btn btn-secondary">Về Menu</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/game2.js"></script>
+</body>
+</html>

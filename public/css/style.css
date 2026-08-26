@@ -95,6 +95,12 @@ body {
 .game-subtitle {
   color: #666;
   margin-top: 0;
+  margin-bottom: 0.4rem;
+}
+.game-credit {
+  color: #999;
+  font-size: 0.85rem;
+  margin-top: 0;
   margin-bottom: 2rem;
 }
 .menu-buttons {
@@ -362,6 +368,10 @@ body {
   position: relative;
   z-index: 1;
 }
+#matchRightCol {
+  align-items: center;
+  flex: none;
+}
 .match-lines {
   position: absolute;
   top: 0;
@@ -394,12 +404,23 @@ body {
   cursor: pointer;
   text-align: center;
   line-height: 1.5;
+  height: 4.4rem;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: transform 0.1s ease;
+}
+.match-item-number {
+  width: 4.4rem;
+  height: 4.4rem;
+  padding: 0;
 }
 .match-item-content {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 0.2rem;
 }
 .match-row {
   white-space: nowrap;
@@ -475,10 +496,85 @@ body {
     font-size: 1rem;
     padding: 0.5rem 0.4rem;
     border-radius: 10px;
+    height: 3.2rem;
+  }
+  .match-item-number {
+    width: 3.2rem;
+    height: 3.2rem;
+    padding: 0;
   }
   .quiz-result {
     font-size: 1rem;
   }
+  .match-game-board {
+    gap: 2rem;
+  }
+  .match-game-board .match-item {
+    font-size: 1rem;
+    padding: 0.4rem 0.3rem;
+    height: 4rem;
+  }
+  .match-game-board .match-item-number {
+    width: 4rem;
+    height: 4rem;
+    font-size: 1rem;
+  }
+  .match-game-board .match-row {
+    font-size: 0.65rem;
+  }
+  .match-game-title {
+    font-size: 1.1rem;
+    padding: 0 0.5rem;
+  }
+}
+
+/* ---------- Game 2: standalone matching game ---------- */
+.match-game-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1rem 2.5rem;
+  overflow-y: auto;
+}
+.match-game-title {
+  color: var(--pika-blue);
+  text-align: center;
+  margin: 0 0 1.5rem;
+}
+.match-game-board {
+  display: flex;
+  gap: 11rem;
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.match-game-board .match-col {
+  gap: 1rem;
+}
+#matchRightCol2 {
+  align-items: center;
+  flex: none;
+}
+.match-game-board .match-item {
+  font-size: 1.7rem;
+  padding: 0.8rem 0.9rem;
+  height: 6.2rem;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.match-game-board .match-item-number {
+  width: 6.2rem;
+  height: 6.2rem;
+  padding: 0;
+  font-size: 1.7rem;
+}
+.match-game-board .match-row {
+  font-size: 1.5rem;
+  letter-spacing: 2px;
 }
 
 /* Win modal */

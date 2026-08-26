@@ -356,19 +356,18 @@ function renderMatchingQuiz(q) {
     matchLinesSvg.setAttribute('viewBox', `0 0 ${rect.width} ${rect.height}`);
   }
 
-  function centerOf(el) {
+  function edgePoint(el, side) {
     const elRect = el.getBoundingClientRect();
     const containerRect = quizMatching.getBoundingClientRect();
-    return {
-      x: elRect.left - containerRect.left + elRect.width / 2,
-      y: elRect.top - containerRect.top + elRect.height / 2,
-    };
+    const x = side === 'right' ? elRect.right - containerRect.left : elRect.left - containerRect.left;
+    const y = elRect.top - containerRect.top + elRect.height / 2;
+    return { x, y };
   }
 
   function drawLine(leftEl, rightEl, status) {
     sizeLinesSvg();
-    const start = centerOf(leftEl);
-    const end = centerOf(rightEl);
+    const start = edgePoint(leftEl, 'right');
+    const end = edgePoint(rightEl, 'left');
     const line = document.createElementNS(SVG_NS, 'line');
     line.setAttribute('x1', start.x);
     line.setAttribute('y1', start.y);
@@ -423,7 +422,7 @@ function renderMatchingQuiz(q) {
   rightOrder.forEach((idx) => {
     const btn = document.createElement('button');
     btn.type = 'button';
-    btn.className = 'match-item';
+    btn.className = 'match-item match-item-number';
     btn.textContent = q.pairs[idx].right;
     btn.addEventListener('click', () => {
       if (answered) return;
