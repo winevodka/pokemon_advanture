@@ -6,6 +6,7 @@ audioManager.setMusicOn(settings.musicOn);
 
 const btnStart = document.getElementById('btnStart');
 const btnGame2 = document.getElementById('btnGame2');
+const btnGame3 = document.getElementById('btnGame3');
 const btnSettings = document.getElementById('btnSettings');
 const btnExit = document.getElementById('btnExit');
 const settingsModal = document.getElementById('settingsModal');
@@ -20,6 +21,10 @@ btnStart.addEventListener('click', () => {
 
 btnGame2.addEventListener('click', () => {
   window.location.href = 'game2.html';
+});
+
+btnGame3.addEventListener('click', () => {
+  window.location.href = 'game3.html';
 });
 
 btnSettings.addEventListener('click', () => {

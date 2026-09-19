@@ -157,5 +157,5 @@ app.post('/api/questions/import', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Pokemon Learning Adventure server running at http://localhost:${PORT}`);
+  console.log(`Bim Bim Bn server running at http://localhost:${PORT}`);
 });

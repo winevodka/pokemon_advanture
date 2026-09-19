@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bim Bim Bn — Tìm Số Còn Thiếu</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="game-body">
+  <header class="hud">
+    <div class="hud-item">Đã giải: <span id="game3Progress">0/8</span></div>
+    <div class="hud-actions">
+      <button id="btnMusicToggle3" class="btn btn-icon" title="Toggle music">🔊</button>
+      <button id="btnRestart3" class="btn btn-secondary">Chơi lại</button>
+      <a href="index.html" class="btn btn-secondary">Menu</a>
+    </div>
+  </header>
+
+  <main class="game3-wrapper">
+    <h2 class="game3-title">🔍 Tìm Số Còn Thiếu!</h2>
+
+    <div class="game3-question-board">
+      <div class="fruit-card" id="fruitStart">
+        <span class="fruit-emoji" id="fruitStartEmoji">🍎</span>
+        <span class="fruit-number-circle" id="fruitStartNumber">?</span>
+      </div>
+      <div class="fruit-card fruit-mystery">
+        <span class="fruit-emoji" id="fruitMysteryEmoji">🍎</span>
+        <span class="fruit-number-circle" id="fruitMysteryNumber">❓</span>
+      </div>
+      <div class="fruit-card" id="fruitEnd">
+        <span class="fruit-emoji" id="fruitEndEmoji">🍊</span>
+        <span class="fruit-number-circle" id="fruitEndNumber">?</span>
+      </div>
+    </div>
+
+    <div id="game3Options" class="game3-options"></div>
+
+    <div id="game3Feedback" class="quiz-result hidden"></div>
+  </main>
+
+  <div id="win3Modal" class="modal hidden">
+    <div class="modal-card win-card">
+      <h2>🎉 Hoàn thành!</h2>
+      <p>Bạn đã tìm đúng tất cả các số còn thiếu!</p>
+      <div class="form-actions">
+        <button id="win3Restart" class="btn btn-primary">Chơi lại</button>
+        <a href="index.html" class="btn btn-secondary">Về Menu</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/game3.js"></script>
+</body>
+</html>
