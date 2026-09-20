@@ -10,14 +10,9 @@ const ANSWER_COLORS = ['card-green', 'card-red', 'card-purple', 'card-orange'];
 const MAX_NUMBER = 20;
 const NUM_ROUNDS = 8;
 const NUM_OPTIONS = 4;
+const SEQUENCE_LENGTH = 5;
 
-const fruitStartEmoji = document.getElementById('fruitStartEmoji');
-const fruitEndEmoji = document.getElementById('fruitEndEmoji');
-const fruitStartNumber = document.getElementById('fruitStartNumber');
-const fruitEndNumber = document.getElementById('fruitEndNumber');
-const fruitMysteryNumber = document.getElementById('fruitMysteryNumber');
-const fruitMysteryEmoji = document.getElementById('fruitMysteryEmoji');
-const fruitMysteryCard = document.querySelector('.fruit-mystery');
+const questionBoard = document.getElementById('game3QuestionBoard');
 const optionsWrap = document.getElementById('game3Options');
 const feedbackEl = document.getElementById('game3Feedback');
 const progressEl = document.getElementById('game3Progress');
@@ -59,7 +54,7 @@ function shuffleArray(array) {
 }
 
 function randomStart(step, parity) {
-  const maxStart = MAX_NUMBER - 2 * step;
+  const maxStart = MAX_NUMBER - (SEQUENCE_LENGTH - 1) * step;
   if (step === 1) {
     return randomInt(1, maxStart);
   }
@@ -73,7 +68,12 @@ function generateSequence() {
   const step = category === 'consecutive' ? 1 : 2;
   const parity = category === 'even' ? 'even' : 'odd';
   const start = randomStart(step, parity);
-  return { start, middle: start + step, end: start + 2 * step, step };
+  const numbers = Array.from({ length: SEQUENCE_LENGTH }, (_, i) => start + i * step);
+  if (pickRandom(['asc', 'desc']) === 'desc') {
+    numbers.reverse();
+  }
+  const mysteryIndex = randomInt(0, SEQUENCE_LENGTH - 1);
+  return { numbers, mysteryIndex, correct: numbers[mysteryIndex] };
 }
 
 function generateOptions(correct) {
@@ -104,9 +104,15 @@ let round = 0;
 let solved = 0;
 let current = null;
 let answered = false;
+let mysteryNumberEl = null;
+let mysteryCardEl = null;
 
 function updateProgress() {
   progressEl.textContent = `${solved}/${NUM_ROUNDS}`;
+}
+
+function pickDistinctEmojis(count) {
+  return shuffleArray(FRUIT_EMOJIS).slice(0, count);
 }
 
 function renderQuestion() {
@@ -114,25 +120,36 @@ function renderQuestion() {
   answered = false;
   feedbackEl.classList.add('hidden');
   feedbackEl.textContent = '';
-  fruitMysteryNumber.textContent = '❓';
-  fruitMysteryCard.classList.remove('revealed');
 
-  const startEmoji = pickRandom(FRUIT_EMOJIS);
-  let endEmoji = pickRandom(FRUIT_EMOJIS);
-  while (endEmoji === startEmoji) {
-    endEmoji = pickRandom(FRUIT_EMOJIS);
-  }
-  let midEmoji = pickRandom(FRUIT_EMOJIS);
-  while (midEmoji === startEmoji || midEmoji === endEmoji) {
-    midEmoji = pickRandom(FRUIT_EMOJIS);
-  }
-  fruitStartEmoji.textContent = startEmoji;
-  fruitEndEmoji.textContent = endEmoji;
-  fruitMysteryEmoji.textContent = midEmoji;
-  fruitStartNumber.textContent = current.start;
-  fruitEndNumber.textContent = current.end;
+  const emojis = pickDistinctEmojis(SEQUENCE_LENGTH);
+  questionBoard.innerHTML = '';
+  mysteryNumberEl = null;
+  mysteryCardEl = null;
 
-  const options = generateOptions(current.middle);
+  current.numbers.forEach((num, idx) => {
+    const card = document.createElement('div');
+    card.className = 'fruit-card';
+    const emoji = document.createElement('span');
+    emoji.className = 'fruit-emoji';
+    emoji.textContent = emojis[idx];
+    const numberCircle = document.createElement('span');
+    numberCircle.className = 'fruit-number-circle';
+
+    if (idx === current.mysteryIndex) {
+      card.classList.add('fruit-mystery');
+      numberCircle.textContent = '❓';
+      mysteryNumberEl = numberCircle;
+      mysteryCardEl = card;
+    } else {
+      numberCircle.textContent = num;
+    }
+
+    card.appendChild(emoji);
+    card.appendChild(numberCircle);
+    questionBoard.appendChild(card);
+  });
+
+  const options = generateOptions(current.correct);
   optionsWrap.innerHTML = '';
   options.forEach((value, idx) => {
     const btn = document.createElement('button');
@@ -157,13 +174,13 @@ function renderQuestion() {
 
 function selectOption(btn, value) {
   if (answered) return;
-  const correct = value === current.middle;
+  const correct = value === current.correct;
 
   if (correct) {
     answered = true;
     btn.classList.add('correct-flash');
-    fruitMysteryNumber.textContent = value;
-    fruitMysteryCard.classList.add('revealed');
+    mysteryNumberEl.textContent = value;
+    mysteryCardEl.classList.add('revealed');
     feedbackEl.textContent = '🎉 Chính xác!';
     feedbackEl.className = 'quiz-result quiz-correct';
     audioManager.playCorrect();
