@@ -977,10 +977,10 @@ body {
 }
 .compare-card {
   position: relative;
-  min-width: 7rem;
-  min-height: 7rem;
-  padding: 0.8rem;
-  border-radius: 22px;
+  min-width: 9.5rem;
+  min-height: 9.5rem;
+  padding: 1rem;
+  border-radius: 26px;
   background: #fff5e6;
   border: 3px solid var(--pika-yellow-dark);
   display: flex;
@@ -990,7 +990,7 @@ body {
   box-sizing: border-box;
 }
 .compare-number {
-  font-size: 3.5rem;
+  font-size: 5rem;
   font-weight: 700;
   color: var(--pika-blue);
   line-height: 1;
@@ -1002,15 +1002,15 @@ body {
   gap: 0.15rem;
 }
 .compare-row {
-  font-size: 1.6rem;
+  font-size: 2.2rem;
   line-height: 1.2;
   white-space: nowrap;
 }
 .compare-mystery {
   background: #fff3d6;
   border: 3px dashed var(--pika-yellow-dark);
-  min-width: 5.5rem;
-  min-height: 7rem;
+  min-width: 7rem;
+  min-height: 9.5rem;
 }
 .compare-symbol {
   font-size: 4.5rem;
@@ -1104,20 +1104,20 @@ body {
     margin-bottom: 1.2rem;
   }
   .compare-card {
-    min-width: 5rem;
-    min-height: 5rem;
-    border-radius: 16px;
-    padding: 0.5rem;
+    min-width: 6.5rem;
+    min-height: 6.5rem;
+    border-radius: 18px;
+    padding: 0.6rem;
   }
   .compare-number {
-    font-size: 2.4rem;
+    font-size: 3.2rem;
   }
   .compare-row {
-    font-size: 1.1rem;
+    font-size: 1.5rem;
   }
   .compare-mystery {
-    min-width: 4rem;
-    min-height: 5rem;
+    min-width: 5rem;
+    min-height: 6.5rem;
   }
   .compare-symbol {
     font-size: 3.2rem;
@@ -1147,19 +1147,19 @@ body {
 
 @media (max-width: 400px) {
   .compare-card {
-    min-width: 4rem;
-    min-height: 4rem;
-    border-radius: 14px;
+    min-width: 5.2rem;
+    min-height: 5.2rem;
+    border-radius: 16px;
   }
   .compare-number {
-    font-size: 1.9rem;
+    font-size: 2.6rem;
   }
   .compare-row {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
   }
   .compare-mystery {
-    min-width: 3.2rem;
-    min-height: 4rem;
+    min-width: 4.2rem;
+    min-height: 5.2rem;
   }
   .compare-symbol {
     font-size: 2.6rem;
