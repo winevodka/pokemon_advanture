@@ -949,3 +949,253 @@ body {
     font-size: 1.4rem;
   }
 }
+
+/* ---------- Game 4: So sánh > < = ---------- */
+.game4-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1rem 2.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+.game4-title {
+  color: var(--pika-blue);
+  text-align: center;
+  margin: 0 0 1.8rem;
+}
+.game4-question-board {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+.compare-card {
+  position: relative;
+  min-width: 7rem;
+  min-height: 7rem;
+  padding: 0.8rem;
+  border-radius: 22px;
+  background: #fff5e6;
+  border: 3px solid var(--pika-yellow-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow);
+  box-sizing: border-box;
+}
+.compare-number {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--pika-blue);
+  line-height: 1;
+}
+.compare-objects {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+.compare-row {
+  font-size: 1.6rem;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.compare-mystery {
+  background: #fff3d6;
+  border: 3px dashed var(--pika-yellow-dark);
+  min-width: 5.5rem;
+  min-height: 7rem;
+}
+.compare-symbol {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--green);
+  transition: color 0.2s ease;
+}
+.compare-mystery.revealed {
+  background: #e3f7e6;
+  border-style: solid;
+  border-color: var(--green);
+}
+
+.game4-options {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(6rem, 1fr));
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 480px;
+}
+.game4-option {
+  position: relative;
+  font-family: inherit;
+  border: none;
+  border-radius: 18px;
+  padding: 1rem 0.6rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  color: #fff;
+  box-shadow: var(--shadow);
+  transition: transform 0.1s ease;
+}
+.game4-option:active {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
+}
+.game4-option-animal {
+  font-size: 2.2rem;
+  line-height: 1;
+}
+.game4-option-symbol {
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  background: #fff;
+  color: #2b2b2b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+.game4-option-label {
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+.game4-option.card-green {
+  background: #6fbf6f;
+}
+.game4-option.card-red {
+  background: #ee6b6b;
+}
+.game4-option.card-purple {
+  background: #9b7fd4;
+}
+.game4-option.correct-flash {
+  animation: correctPop 0.5s ease;
+}
+.game4-option.wrong-flash {
+  animation: matchShake 0.4s ease;
+}
+.game4-option:disabled {
+  cursor: default;
+  opacity: 0.6;
+  filter: grayscale(0.5);
+}
+.game4-option-x {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.6rem;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 18px;
+}
+
+@media (max-width: 600px) {
+  .game4-title {
+    font-size: 1.2rem;
+    padding: 0 0.5rem;
+    margin-bottom: 1.2rem;
+  }
+  .compare-card {
+    min-width: 5rem;
+    min-height: 5rem;
+    border-radius: 16px;
+    padding: 0.5rem;
+  }
+  .compare-number {
+    font-size: 2.4rem;
+  }
+  .compare-row {
+    font-size: 1.1rem;
+  }
+  .compare-mystery {
+    min-width: 4rem;
+    min-height: 5rem;
+  }
+  .compare-symbol {
+    font-size: 2.2rem;
+  }
+  .game4-question-board {
+    gap: 0.8rem;
+    margin-bottom: 1.6rem;
+  }
+  .game4-options {
+    gap: 0.7rem;
+  }
+  .game4-option {
+    padding: 0.7rem 0.4rem 1rem;
+  }
+  .game4-option-animal {
+    font-size: 1.7rem;
+  }
+  .game4-option-symbol {
+    width: 2.6rem;
+    height: 2.6rem;
+    font-size: 1.4rem;
+  }
+  .game4-option-label {
+    font-size: 0.7rem;
+  }
+  .game4-option-x {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .compare-card {
+    min-width: 4rem;
+    min-height: 4rem;
+    border-radius: 14px;
+  }
+  .compare-number {
+    font-size: 1.9rem;
+  }
+  .compare-row {
+    font-size: 0.9rem;
+  }
+  .compare-mystery {
+    min-width: 3.2rem;
+    min-height: 4rem;
+  }
+  .compare-symbol {
+    font-size: 1.8rem;
+  }
+  .game4-question-board {
+    gap: 0.5rem;
+  }
+  .game4-options {
+    grid-template-columns: repeat(3, minmax(4.5rem, 1fr));
+    gap: 0.5rem;
+  }
+  .game4-option {
+    padding: 0.5rem 0.3rem 0.8rem;
+    border-radius: 14px;
+  }
+  .game4-option-animal {
+    font-size: 1.3rem;
+  }
+  .game4-option-symbol {
+    width: 2.1rem;
+    height: 2.1rem;
+    font-size: 1.1rem;
+  }
+  .game4-option-label {
+    font-size: 0.6rem;
+  }
+  .game4-option-x {
+    font-size: 1.4rem;
+  }
+}
