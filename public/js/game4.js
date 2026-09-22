@@ -7,7 +7,6 @@ const FRUIT_EMOJIS = ['🍎', '🍊', '🍑', '🍐', '🍇', '🍓', '🍉', '�
 const ANSWER_ANIMALS = ['🐤', '🐸', '🐘'];
 const ANSWER_COLORS = ['card-green', 'card-red', 'card-purple'];
 const SYMBOLS = ['>', '<', '='];
-const SYMBOL_LABELS = { '>': 'Lớn hơn', '<': 'Bé hơn', '=': 'Bằng nhau' };
 
 const MAX_VALUE = 10;
 const NUM_ROUNDS = 8;
@@ -148,12 +147,8 @@ function renderQuestion() {
     const symbolSpan = document.createElement('span');
     symbolSpan.className = 'game4-option-symbol';
     symbolSpan.textContent = symbol;
-    const label = document.createElement('span');
-    label.className = 'game4-option-label';
-    label.textContent = SYMBOL_LABELS[symbol];
     btn.appendChild(animal);
     btn.appendChild(symbolSpan);
-    btn.appendChild(label);
     btn.addEventListener('click', () => selectOption(btn, symbol));
     optionsWrap.appendChild(btn);
   });
