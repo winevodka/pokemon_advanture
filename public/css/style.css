@@ -1387,35 +1387,61 @@ body {
 }
 
 @media (max-width: 600px) {
+  .game5-wrapper {
+    padding: 0.8rem 0.7rem 1rem;
+  }
   .game5-title {
-    font-size: 1.2rem;
-    margin-bottom: 1rem;
+    font-size: 1.05rem;
+    margin-bottom: 0.55rem;
   }
   .game5-subtitle {
-    font-size: 1rem;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+  .game5-legend {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.45rem;
+    margin-bottom: 0.9rem;
   }
   .animal-value-card {
-    border-radius: 16px;
-    min-height: 5.8rem;
-    padding: 0.75rem;
+    border-radius: 12px;
+    min-height: 3.9rem;
+    padding: 0.4rem 0.2rem;
+    gap: 0.2rem;
+    border-width: 2px;
   }
   .animal-value-emoji {
-    font-size: 2.4rem;
+    font-size: 1.5rem;
+  }
+  .animal-value-equals {
+    font-size: 1rem;
+  }
+  .animal-value-number {
+    width: 1.8rem;
+    height: 1.8rem;
+    font-size: 0.9rem;
+  }
+  .game5-question-board {
+    flex-wrap: nowrap;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
   }
   .animal-math-card {
-    min-width: 7.5rem;
-    min-height: 7.5rem;
-    border-radius: 18px;
-    padding: 0.8rem 0.6rem;
+    min-width: 5rem;
+    min-height: 5rem;
+    border-radius: 14px;
+    padding: 0.45rem 0.25rem;
+    gap: 0.2rem;
+    border-width: 2px;
   }
   .animal-math-emoji {
-    font-size: 3.3rem;
-  }
-  .animal-math-operator {
     font-size: 2.2rem;
   }
+  .animal-math-operator {
+    font-size: 1.4rem;
+  }
   .animal-math-answer-mark {
-    font-size: 3.2rem;
+    font-size: 2rem;
   }
   .game5-option {
     border-radius: 16px;
@@ -1433,22 +1459,26 @@ body {
 
 @media (max-width: 420px) {
   .game5-legend {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.35rem;
   }
   .game5-question-board {
-    gap: 0.5rem;
+    gap: 0.25rem;
   }
   .animal-math-card {
-    min-width: 6.1rem;
-    min-height: 6.1rem;
-    padding: 0.6rem 0.3rem;
+    min-width: 4.35rem;
+    min-height: 4.35rem;
+    padding: 0.3rem 0.2rem;
     border-width: 2px;
   }
   .animal-math-emoji {
-    font-size: 2.7rem;
+    font-size: 1.9rem;
   }
   .animal-math-operator {
-    font-size: 1.8rem;
+    font-size: 1.2rem;
+  }
+  .animal-math-answer-mark {
+    font-size: 1.7rem;
   }
   .game5-options {
     gap: 0.6rem;
