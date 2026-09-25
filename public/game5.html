@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bim Bim Bn — Tính Với Con Vật</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="game-body">
+  <header class="hud">
+    <div class="hud-item">Đã giải: <span id="game5Progress">0/8</span></div>
+    <div class="hud-actions">
+      <button id="btnMusicToggle5" class="btn btn-icon" title="Toggle music">🔊</button>
+      <button id="btnRestart5" class="btn btn-secondary">Chơi lại</button>
+      <a href="index.html" class="btn btn-secondary">Menu</a>
+    </div>
+  </header>
+
+  <main class="game5-wrapper">
+    <h2 class="game5-title">🧠 Quan sát con vật và hoàn thành phép tính!</h2>
+
+    <section class="game5-legend-section">
+      <h3 class="game5-subtitle">Mỗi con vật ứng với một con số</h3>
+      <div id="game5Legend" class="game5-legend"></div>
+    </section>
+
+    <section class="game5-question-section">
+      <h3 class="game5-subtitle">Con vật nào là đáp án đúng?</h3>
+      <div id="game5QuestionBoard" class="game5-question-board"></div>
+    </section>
+
+    <div id="game5Options" class="game5-options"></div>
+
+    <div id="game5Feedback" class="quiz-result hidden"></div>
+  </main>
+
+  <div id="win5Modal" class="modal hidden">
+    <div class="modal-card win-card">
+      <h2>🎉 Hoàn thành!</h2>
+      <p>Bạn đã chọn đúng tất cả các con vật rồi!</p>
+      <div class="form-actions">
+        <button id="win5Restart" class="btn btn-primary">Chơi lại</button>
+        <a href="index.html" class="btn btn-secondary">Về Menu</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/game5.js"></script>
+</body>
+</html>

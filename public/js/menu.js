@@ -8,6 +8,7 @@ const btnStart = document.getElementById('btnStart');
 const btnGame2 = document.getElementById('btnGame2');
 const btnGame3 = document.getElementById('btnGame3');
 const btnGame4 = document.getElementById('btnGame4');
+const btnGame5 = document.getElementById('btnGame5');
 const btnSettings = document.getElementById('btnSettings');
 const btnExit = document.getElementById('btnExit');
 const settingsModal = document.getElementById('settingsModal');
@@ -30,6 +31,10 @@ btnGame3.addEventListener('click', () => {
 
 btnGame4.addEventListener('click', () => {
   window.location.href = 'game4.html';
+});
+
+btnGame5.addEventListener('click', () => {
+  window.location.href = 'game5.html';
 });
 
 btnSettings.addEventListener('click', () => {
