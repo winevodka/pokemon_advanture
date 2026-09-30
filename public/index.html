@@ -8,18 +8,45 @@
 </head>
 <body class="menu-body">
   <div class="menu-screen">
-    <h1 class="game-logo">⚡ Bim Bim Bn ⚡</h1>
-    <p class="game-subtitle">Học mà chơi — Chơi mà học!</p>
-    <p class="game-credit">Made by Bố Bim</p>
-    <div class="menu-buttons">
-      <button id="btnStart" class="btn btn-primary">🗺️ Game 1: Phiêu lưu bản đồ</button>
-      <button id="btnGame2" class="btn btn-primary">🧩 Game 2: Nối hình</button>
-      <button id="btnGame3" class="btn btn-primary">🔍 Game 3: Tìm số còn thiếu</button>
-      <button id="btnGame4" class="btn btn-primary">⚖️ Game 4: So sánh</button>
-      <button id="btnGame5" class="btn btn-primary">🦊 Game 5: Tính với con vật</button>
-      <button id="btnSettings" class="btn btn-secondary">Settings</button>
-      <button id="btnExit" class="btn btn-danger">Exit</button>
+    <header class="menu-header">
+      <div class="menu-header-text">
+        <h1 class="game-logo">⚡ Bim Bim Bn ⚡</h1>
+        <p class="game-subtitle">Học mà chơi — Chơi mà học!</p>
+      </div>
+      <div class="menu-header-actions">
+        <button id="btnSettings" class="btn btn-icon" title="Cài đặt">⚙️</button>
+        <button id="btnExit" class="btn btn-icon" title="Thoát">🚪</button>
+      </div>
+    </header>
+
+    <div class="game-grid">
+      <button class="game-card card-color-1" data-href="game.html">
+        <span class="game-card-icon">🗺️</span>
+        <span class="game-card-title">Phiêu lưu bản đồ</span>
+      </button>
+      <button class="game-card card-color-2" data-href="game2.html">
+        <span class="game-card-icon">🧩</span>
+        <span class="game-card-title">Nối hình</span>
+      </button>
+      <button class="game-card card-color-3" data-href="game3.html">
+        <span class="game-card-icon">🔍</span>
+        <span class="game-card-title">Tìm số còn thiếu</span>
+      </button>
+      <button class="game-card card-color-4" data-href="game4.html">
+        <span class="game-card-icon">⚖️</span>
+        <span class="game-card-title">So sánh</span>
+      </button>
+      <button class="game-card card-color-5" data-href="game5.html">
+        <span class="game-card-icon">🦊</span>
+        <span class="game-card-title">Tính với con vật</span>
+      </button>
+      <button class="game-card card-color-6" data-href="game6.html">
+        <span class="game-card-icon">🔢</span>
+        <span class="game-card-title">Điền số còn thiếu</span>
+      </button>
     </div>
+
+    <p class="game-credit">Made by Bố Bim</p>
     <a href="admin.html" class="admin-link">Question Bank Admin</a>
   </div>
 

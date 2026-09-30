@@ -4,11 +4,7 @@ import { loadSettings, saveSettings } from './storage.js';
 const settings = loadSettings();
 audioManager.setMusicOn(settings.musicOn);
 
-const btnStart = document.getElementById('btnStart');
-const btnGame2 = document.getElementById('btnGame2');
-const btnGame3 = document.getElementById('btnGame3');
-const btnGame4 = document.getElementById('btnGame4');
-const btnGame5 = document.getElementById('btnGame5');
+const gameCards = document.querySelectorAll('.game-card');
 const btnSettings = document.getElementById('btnSettings');
 const btnExit = document.getElementById('btnExit');
 const settingsModal = document.getElementById('settingsModal');
@@ -17,24 +13,10 @@ const musicToggle = document.getElementById('musicToggle');
 
 musicToggle.checked = settings.musicOn;
 
-btnStart.addEventListener('click', () => {
-  window.location.href = 'game.html';
-});
-
-btnGame2.addEventListener('click', () => {
-  window.location.href = 'game2.html';
-});
-
-btnGame3.addEventListener('click', () => {
-  window.location.href = 'game3.html';
-});
-
-btnGame4.addEventListener('click', () => {
-  window.location.href = 'game4.html';
-});
-
-btnGame5.addEventListener('click', () => {
-  window.location.href = 'game5.html';
+gameCards.forEach((card) => {
+  card.addEventListener('click', () => {
+    window.location.href = card.dataset.href;
+  });
 });
 
 btnSettings.addEventListener('click', () => {

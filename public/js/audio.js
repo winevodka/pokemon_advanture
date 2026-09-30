@@ -1,6 +1,14 @@
 // Lightweight synthesized audio (Web Audio API) so the game works with zero
 // external asset files. Drop real files into assets/audio/ and wire them in
 // here if you want richer sound later.
+
+// Background music source. Can be a local path (e.g. 'assets/audio/bgm.mp3')
+// or a direct URL to an audio file hosted online (e.g. a CDN / raw file link
+// ending in .mp3/.ogg). It must be a direct audio file URL — links to
+// YouTube/Spotify/SoundCloud pages will NOT work, and the host must allow
+// cross-origin access (no CORS block) for it to play reliably.
+const MUSIC_URL = 'assets/audio/bgm.mp3';
+
 class AudioManager {
   constructor() {
     this.ctx = null;
@@ -58,7 +66,7 @@ class AudioManager {
   startMusic() {
     if (!this.musicOn || this.musicEl || this.musicNodes) return;
     try {
-      const el = new Audio('assets/audio/bgm.mp3');
+      const el = new Audio(MUSIC_URL);
       el.loop = true;
       el.volume = 0.3;
       el.addEventListener('error', () => {
@@ -74,6 +82,7 @@ class AudioManager {
       this.startSynthMusic();
     }
   }
+
 
   startSynthMusic() {
     if (!this.musicOn || this.musicNodes) return;

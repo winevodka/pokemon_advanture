@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bim Bim Bn — Điền Số Còn Thiếu</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="game-body">
+  <header class="hud">
+    <div class="hud-item">Đã giải: <span id="game6Progress">0/8</span></div>
+    <div class="hud-actions">
+      <button id="btnMusicToggle6" class="btn btn-icon" title="Toggle music">🔊</button>
+      <button id="btnRestart6" class="btn btn-secondary">Chơi lại</button>
+      <a href="index.html" class="btn btn-secondary">Menu</a>
+    </div>
+  </header>
+
+  <main class="game6-wrapper">
+    <h2 class="game6-title">🔢 Điền Số Còn Thiếu Vào Ô Trống!</h2>
+
+    <div id="game6EquationBoard" class="game6-equation-board"></div>
+
+    <div id="game6Options" class="game6-options"></div>
+
+    <div id="game6Feedback" class="quiz-result hidden"></div>
+  </main>
+
+  <div id="win6Modal" class="modal hidden">
+    <div class="modal-card win-card">
+      <h2>🎉 Hoàn thành!</h2>
+      <p>Bạn đã điền đúng tất cả các ô trống!</p>
+      <div class="form-actions">
+        <button id="win6Restart" class="btn btn-primary">Chơi lại</button>
+        <a href="index.html" class="btn btn-secondary">Về Menu</a>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="js/game6.js"></script>
+</body>
+</html>

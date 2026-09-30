@@ -72,49 +72,147 @@ body {
 
 /* ---------- Menu screen ---------- */
 .menu-body {
-  height: 100vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   background: radial-gradient(circle at top, #fff6d8 0%, var(--bg-sky) 70%);
+  padding: 2rem 1rem;
 }
 .menu-screen {
   text-align: center;
   background: #fff;
-  padding: 3rem 3.5rem;
+  padding: 2rem 2.5rem 2.5rem;
   border-radius: var(--card-radius);
   box-shadow: 0 10px 0 rgba(0, 0, 0, 0.1);
   border: 4px solid var(--pika-yellow);
+  width: 100%;
+  max-width: 900px;
+  box-sizing: border-box;
+}
+.menu-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.6rem;
+}
+.menu-header-text {
+  text-align: left;
+}
+.menu-header-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-shrink: 0;
 }
 .game-logo {
   color: var(--pika-blue);
   font-size: 2.2rem;
   text-shadow: 2px 2px 0 var(--pika-yellow);
-  margin-bottom: 0.2rem;
+  margin: 0 0 0.2rem;
 }
 .game-subtitle {
   color: #666;
-  margin-top: 0;
-  margin-bottom: 0.4rem;
+  margin: 0;
 }
 .game-credit {
   color: #999;
   font-size: 0.85rem;
-  margin-top: 0;
-  margin-bottom: 2rem;
+  margin: 1.8rem 0 0;
 }
-.menu-buttons {
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.2rem;
+}
+.game-card {
+  font-family: inherit;
+  border: none;
+  border-radius: 22px;
+  padding: 1.4rem 0.8rem 1.2rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  align-items: stretch;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  color: #fff;
+  box-shadow: var(--shadow);
+  transition: transform 0.15s ease;
+}
+.game-card:hover {
+  transform: translateY(-3px);
+}
+.game-card:active {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
+}
+.game-card-icon {
+  font-size: 2.8rem;
+  line-height: 1;
+}
+.game-card-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  line-height: 1.25;
+}
+.card-color-1 {
+  background: var(--pika-blue);
+}
+.card-color-2 {
+  background: #6fbf6f;
+}
+.card-color-3 {
+  background: #ee6b6b;
+}
+.card-color-4 {
+  background: #9b7fd4;
+}
+.card-color-5 {
+  background: #f0a35c;
+}
+.card-color-6 {
+  background: #ee7fd0;
 }
 .admin-link {
   display: inline-block;
-  margin-top: 1.5rem;
+  margin-top: 1rem;
   color: var(--pika-blue);
   font-size: 0.85rem;
 }
+
+@media (max-width: 600px) {
+  .menu-screen {
+    padding: 1.4rem 1.2rem 1.8rem;
+  }
+  .menu-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.6rem;
+  }
+  .menu-header-text {
+    text-align: center;
+  }
+  .game-logo {
+    font-size: 1.6rem;
+  }
+  .game-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.8rem;
+  }
+  .game-card {
+    padding: 1.1rem 0.5rem 0.9rem;
+    border-radius: 18px;
+  }
+  .game-card-icon {
+    font-size: 2.2rem;
+  }
+  .game-card-title {
+    font-size: 0.85rem;
+  }
+}
+
 
 /* ---------- Modals ---------- */
 .modal {
@@ -1489,5 +1587,227 @@ body {
   }
   .game5-option-emoji {
     font-size: 2.7rem;
+  }
+}
+
+/* ---------- Game 6: Điền số còn thiếu ---------- */
+.game6-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1.5rem 1rem 2.5rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
+  box-sizing: border-box;
+}
+.game6-title {
+  color: var(--pika-blue);
+  text-align: center;
+  margin: 0 0 1.8rem;
+}
+.game6-equation-board {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+.equation-term {
+  min-width: 5.5rem;
+  min-height: 5.5rem;
+  padding: 0.5rem;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+.equation-number {
+  color: var(--pika-blue);
+  background: transparent;
+}
+.equation-op {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--pika-blue);
+  line-height: 1;
+}
+.equation-blank {
+  color: #fff;
+  border: 3px solid rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+.equation-blank.blank-yellow {
+  background: #ffd23f;
+  border-color: #e0a800;
+}
+.equation-blank.blank-green {
+  background: #6fbf6f;
+  border-color: #3f8f3f;
+}
+.equation-blank.blank-pink {
+  background: #ee7fd0;
+  border-color: #c94fae;
+}
+.equation-blank.revealed {
+  color: #fff;
+  border-style: solid;
+  border-color: var(--green);
+  animation: correctPop 0.5s ease;
+}
+
+.game6-options {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(6rem, 1fr));
+  gap: 1.2rem;
+  width: 100%;
+  max-width: 640px;
+}
+.game6-option {
+  position: relative;
+  font-family: inherit;
+  border: none;
+  border-radius: 18px;
+  padding: 1rem 0.6rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  cursor: pointer;
+  color: #fff;
+  box-shadow: var(--shadow);
+  transition: transform 0.1s ease;
+}
+.game6-option:active {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.15);
+}
+.game6-option-animal {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+.game6-option-number {
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  background: #fff;
+  color: #2b2b2b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1.6rem;
+}
+.game6-option.card-green {
+  background: #6fbf6f;
+}
+.game6-option.card-red {
+  background: #ee6b6b;
+}
+.game6-option.card-purple {
+  background: #9b7fd4;
+}
+.game6-option.card-orange {
+  background: #f0a35c;
+}
+.game6-option.correct-flash {
+  animation: correctPop 0.5s ease;
+}
+.game6-option.wrong-flash {
+  animation: matchShake 0.4s ease;
+}
+.game6-option:disabled {
+  cursor: default;
+  opacity: 0.6;
+  filter: grayscale(0.5);
+}
+.game6-option-x {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.6rem;
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 18px;
+}
+
+@media (max-width: 600px) {
+  .game6-title {
+    font-size: 1.2rem;
+    padding: 0 0.5rem;
+    margin-bottom: 1.2rem;
+  }
+  .equation-term {
+    min-width: 3.6rem;
+    min-height: 3.6rem;
+    border-radius: 14px;
+    font-size: 2rem;
+  }
+  .equation-op {
+    font-size: 2rem;
+  }
+  .game6-equation-board {
+    gap: 0.5rem;
+    margin-bottom: 1.6rem;
+    flex-wrap: nowrap;
+  }
+  .game6-options {
+    grid-template-columns: repeat(2, minmax(5rem, 1fr));
+    gap: 0.8rem;
+  }
+  .game6-option {
+    padding: 0.7rem 0.4rem 1rem;
+  }
+  .game6-option-animal {
+    font-size: 1.8rem;
+  }
+  .game6-option-number {
+    width: 2.6rem;
+    height: 2.6rem;
+    font-size: 1.3rem;
+  }
+  .game6-option-x {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .equation-term {
+    min-width: 2.9rem;
+    min-height: 2.9rem;
+    border-radius: 12px;
+    font-size: 1.5rem;
+    border-width: 2px;
+  }
+  .equation-op {
+    font-size: 1.5rem;
+  }
+  .game6-equation-board {
+    gap: 0.35rem;
+  }
+  .game6-options {
+    gap: 0.6rem;
+  }
+  .game6-option {
+    padding: 0.5rem 0.3rem 0.8rem;
+    border-radius: 14px;
+  }
+  .game6-option-animal {
+    font-size: 1.4rem;
+  }
+  .game6-option-number {
+    width: 2.2rem;
+    height: 2.2rem;
+    font-size: 1.05rem;
+  }
+  .game6-option-x {
+    font-size: 1.4rem;
   }
 }
