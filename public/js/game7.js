@@ -2,11 +2,13 @@ import { audioManager } from './audio.js';
 import { loadSettings, saveSettings, loadColorLabState, saveColorLabState } from './storage.js';
 
 // ---------- Pigment model ----------
-// Colors are mixed using a geometric weighted mean of each pigment's
-// reflectance (normalized 0-1 per RGB channel). This mimics subtractive
-// paint mixing much better than a plain RGB average: Red+Yellow -> Orange,
-// Yellow+Blue -> Green, Red+Blue -> Purple, Red+White -> Pink,
-// Blue+Black -> Dark Blue.
+// Chromatic pigments (red/yellow/blue/orange/green/indigo/violet) are mixed
+// with each other using a geometric weighted mean of their reflectance
+// (normalized 0-1 per RGB channel). This mimics subtractive paint mixing
+// much better than a plain RGB average: Red+Yellow -> Orange, Yellow+Blue ->
+// Green, Red+Blue -> Purple. White/black are blended in afterwards as a
+// linear tint/shade instead (see mixColors) so they lighten/darken
+// proportionally to volume rather than being damped by the log curve.
 const PIGMENTS = {
   red: { name: 'Đỏ', emoji: '🟥', tier: 1, reflect: [0.90, 0.12, 0.12] },
   yellow: { name: 'Vàng', emoji: '🟨', tier: 1, reflect: [1.00, 0.87, 0.20] },
@@ -19,10 +21,13 @@ const PIGMENTS = {
   violet: { name: 'Tím', emoji: '🟣', tier: 3, reflect: [0.55, 0.20, 0.65] },
 };
 const SHELF_ORDER = ['red', 'yellow', 'blue', 'white', 'black', 'orange', 'green', 'indigo', 'violet'];
+// Pigments that participate in the hue-mixing (geometric mean) step. White and
+// black are handled separately as a linear tint/shade so they lighten/darken
+// proportionally to volume instead of being damped by the log curve.
+const CHROMATIC_IDS = new Set(['red', 'yellow', 'blue', 'orange', 'green', 'indigo', 'violet']);
 const TIER_REQUIREMENTS = { 2: 3, 3: 10 };
 const BEAKER_MAX = 100;
 const POUR_STEP = 10;
-const MAX_DIST = Math.sqrt(3 * 255 * 255);
 const COLOR_BUCKET = 20;
 
 const OBJECT_TARGETS = [
@@ -208,20 +213,69 @@ function mixColors(mix) {
   const entries = Object.entries(mix).filter(([, ml]) => ml > 0);
   const total = entries.reduce((sum, [, ml]) => sum + ml, 0);
   if (total <= 0) return null;
-  const channelSums = [0, 0, 0];
-  entries.forEach(([id, ml]) => {
-    const weight = ml / total;
-    const reflect = PIGMENTS[id].reflect;
-    for (let c = 0; c < 3; c++) {
-      channelSums[c] += weight * Math.log(reflect[c]);
-    }
+
+  const whiteMl = mix.white || 0;
+  const blackMl = mix.black || 0;
+  const colorEntries = entries.filter(([id]) => CHROMATIC_IDS.has(id));
+  const colorMl = total - whiteMl - blackMl;
+
+  // 1. Mix only the chromatic pigments with the geometric (log) mean — this
+  // is what produces Red+Yellow=Orange, Yellow+Blue=Green, etc. The result
+  // is irrelevant (and left as a zero placeholder) when colorMl is 0, since
+  // its weight below will also be 0.
+  let base = [0, 0, 0];
+  if (colorMl > 0) {
+    const channelSums = [0, 0, 0];
+    colorEntries.forEach(([id, ml]) => {
+      const weight = ml / colorMl;
+      const reflect = PIGMENTS[id].reflect;
+      for (let c = 0; c < 3; c++) {
+        channelSums[c] += weight * Math.log(reflect[c]);
+      }
+    });
+    base = channelSums.map((sum) => clamp01(Math.exp(sum)) * 255);
+  }
+
+  // 2. White/black act as a linear tint/shade instead of another
+  // multiplicative filter. Treating them like regular pigments in the log
+  // mean above made white barely lighten saturated colors (e.g. Red+White
+  // stayed almost as saturated as pure Red) because the geometric mean is
+  // always pulled toward the smallest channel value. Blending them in
+  // proportionally to their share of the total volume lightens/darkens the
+  // mixture the way kids actually expect from tinting/shading with paint.
+  const colorWeight = colorMl / total;
+  const whiteWeight = whiteMl / total;
+  const blackWeight = blackMl / total;
+  const whiteRgb = PIGMENTS.white.reflect.map((v) => v * 255);
+  const blackRgb = PIGMENTS.black.reflect.map((v) => v * 255);
+
+  return base.map((v, c) => {
+    const blended = v * colorWeight + whiteRgb[c] * whiteWeight + blackRgb[c] * blackWeight;
+    return Math.round(Math.max(0, Math.min(255, blended)));
   });
-  return channelSums.map((sum) => Math.round(clamp01(Math.exp(sum)) * 255));
 }
 
+// Cheap, widely-used perceptual color distance ("redmean" approximation,
+// see https://www.compuphase.com/cmetric.htm). It weights the G channel
+// highest (human eyes are most sensitive to green) and skews the R/B
+// weights based on average redness, which tracks human perception much
+// better than plain Euclidean RGB distance without the instability that a
+// Hue-based metric would have on the low-saturation colors this game
+// produces a lot of now that white/black tint/shade linearly (see above).
 function colorDistance(a, b) {
-  return Math.sqrt((a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 + (a[2] - b[2]) ** 2);
+  const rMean = (a[0] + b[0]) / 2;
+  const dr = a[0] - b[0];
+  const dg = a[1] - b[1];
+  const db = a[2] - b[2];
+  const weightR = 2 + rMean / 256;
+  const weightG = 4;
+  const weightB = 2 + (255 - rMean) / 256;
+  return Math.sqrt(weightR * dr * dr + weightG * dg * dg + weightB * db * db);
 }
+
+// Worst case under the redmean metric (pure black vs pure white) — used to
+// normalize distances into a 0-100% accuracy score.
+const MAX_DIST = colorDistance([0, 0, 0], [255, 255, 255]);
 
 function accuracyFromDistance(dist) {
   return Math.max(0, 100 - (dist / MAX_DIST) * 100);
@@ -256,24 +310,47 @@ function rgbToHsl(r, g, b) {
 
 function nameColor(rgb) {
   const { h, s, l } = rgbToHsl(rgb[0], rgb[1], rgb[2]);
+
+  // 1. Neutral grayscale bucket — hue is noisy/meaningless once saturation
+  // is near zero, so this must be checked before any hue-based naming.
   if (s < 0.12) {
     if (l > 0.85) return 'Trắng Tinh';
     if (l < 0.15) return 'Đen Huyền';
     return l > 0.55 ? 'Xám Sáng' : 'Xám Đậm';
   }
-  const hueBands = [
-    [20, 'Đỏ'], [45, 'Cam'], [65, 'Vàng'], [150, 'Xanh Lá'],
-    [195, 'Ngọc Lam'], [245, 'Xanh Dương'], [275, 'Chàm'], [320, 'Tím'], [340, 'Hồng Cánh Sen'], [360, 'Hồng'],
-  ];
-  let hueName = 'Đỏ';
-  for (const [max, nm] of hueBands) {
-    if (h <= max) { hueName = nm; break; }
+
+  // 2. Dark, reasonably saturated warm hues (orange through yellow-green)
+  // read as Brown/Olive to the eye, not "dark orange/yellow" — carve this
+  // out before the regular hue bands. Orange-ish hues (~15-55°) land as
+  // Brown; yellow-green hues (~55-95°) land as Olive/moss.
+  if (l < 0.36 && s > 0.25 && h >= 15 && h < 95) {
+    return h < 55 ? 'Nâu Đất' : 'Rêu Đậm';
   }
-  let modifier;
-  if (l > 0.78) modifier = 'Nhạt';
-  else if (l < 0.3) modifier = 'Đậm';
-  else modifier = s > 0.55 ? 'Rực Rỡ' : 'Dịu';
-  return `${hueName} ${modifier}`;
+
+  // 3. Hue bands, wraparound-aware: Hue is a circle (0-360°), so Red sits at
+  // BOTH ends of the wheel (345-360° and 0-15°), not just the low end. The
+  // old sequential "h <= max" loop missed this and misclassified saturated
+  // near-360° reds as a separate "Hồng" (pink) band.
+  let hueName;
+  if (h >= 345 || h < 15) hueName = 'Đỏ';
+  else if (h < 45) hueName = 'Cam';
+  else if (h < 65) hueName = 'Vàng';
+  else if (h < 150) hueName = 'Xanh Lá';
+  else if (h < 195) hueName = 'Ngọc Lam';
+  else if (h < 245) hueName = 'Xanh Dương';
+  else if (h < 275) hueName = 'Chàm';
+  else if (h < 320) hueName = 'Tím';
+  else hueName = 'Hồng Cánh Sen'; // 320-345: magenta/fuchsia
+
+  // 4. Lightness/saturation modifiers. Pink is really just a light red (or
+  // light magenta), so instead of keeping "Hồng" as its own hue band (which
+  // used to collide with the modifiers and produce nonsense like
+  // "Hồng Đậm" — a "dark pink"), special-case it here based on lightness.
+  if (l > 0.78) {
+    return hueName === 'Đỏ' || hueName === 'Hồng Cánh Sen' ? 'Hồng Nhạt' : `${hueName} Nhạt`;
+  }
+  if (l < 0.3) return `${hueName} Đậm`;
+  return `${hueName} ${s > 0.55 ? 'Rực Rỡ' : 'Dịu'}`;
 }
 
 function colorKey(rgb) {
