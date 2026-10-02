@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bim Bim Bn — Color Lab</title>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<body class="game-body">
+  <header class="hud">
+    <div class="hud-item">🧪 Đã khám phá: <span id="game7Discovered">0</span></div>
+    <div class="hud-item" id="game7ModeLabel">Sandbox</div>
+    <div class="hud-actions">
+      <button id="btnColorBook" class="btn btn-icon" title="Sổ tay màu sắc">📖</button>
+      <button id="btnAchievements" class="btn btn-icon" title="Thành tích">🏆</button>
+      <button id="btnMusicToggle7" class="btn btn-icon" title="Toggle music">🔊</button>
+      <button id="btnModeSelect" class="btn btn-secondary">Đổi chế độ</button>
+      <a href="index.html" class="btn btn-secondary">Menu</a>
+    </div>
+  </header>
+
+  <div id="modeSelectScreen" class="game7-mode-select">
+    <h2 class="game7-title">🧪 Color Lab — Phòng Thí Nghiệm Pha Màu</h2>
+    <p class="game7-subtitle">Chọn chế độ chơi:</p>
+    <div class="game7-mode-grid">
+      <button class="game7-mode-card" data-mode="sandbox">
+        <span class="game7-mode-icon">🧪</span>
+        <span class="game7-mode-title">Sandbox</span>
+        <span class="game7-mode-desc">Tự do pha màu, khám phá thỏa thích</span>
+      </button>
+      <button class="game7-mode-card" data-mode="create">
+        <span class="game7-mode-icon">🎯</span>
+        <span class="game7-mode-title">Tạo màu này</span>
+        <span class="game7-mode-desc">Pha đúng màu được yêu cầu</span>
+      </button>
+      <button class="game7-mode-card" data-mode="object">
+        <span class="game7-mode-icon">🍊</span>
+        <span class="game7-mode-title">Tìm màu đồ vật</span>
+        <span class="game7-mode-desc">Pha màu giống đồ vật quen thuộc</span>
+      </button>
+      <button class="game7-mode-card" data-mode="mystery">
+        <span class="game7-mode-icon">❓</span>
+        <span class="game7-mode-title">Màu bí ẩn</span>
+        <span class="game7-mode-desc">Tự suy luận, không gợi ý màu sắc</span>
+      </button>
+      <button class="game7-mode-card" data-mode="paint" id="paintModeCard">
+        <span class="game7-mode-icon">🎨</span>
+        <span class="game7-mode-title">Tô tranh</span>
+        <span class="game7-mode-desc">Tự pha màu rồi tô tranh thật đẹp</span>
+      </button>
+    </div>
+  </div>
+
+  <main id="labScreen" class="game7-lab hidden">
+    <section id="missionPanel" class="game7-mission hidden">
+      <div class="game7-mission-label" id="missionLabel">Nhiệm vụ</div>
+      <div class="game7-mission-target" id="missionTarget"></div>
+    </section>
+
+    <div class="game7-workspace">
+      <section class="game7-shelf">
+        <h3 class="game7-panel-title">Giá màu</h3>
+        <div id="colorShelf" class="game7-shelf-grid"></div>
+      </section>
+
+      <section class="game7-measure">
+        <h3 class="game7-panel-title">Ống đong</h3>
+        <div id="measureArea" class="game7-measure-area">
+          <p class="game7-hint">Chọn một lọ màu để đong</p>
+        </div>
+      </section>
+
+      <section class="game7-beaker-section">
+        <h3 class="game7-panel-title">Bình pha</h3>
+        <div class="game7-beaker-wrap">
+          <div id="beaker" class="game7-beaker">
+            <div id="beakerLiquid" class="game7-beaker-liquid">
+              <div id="beakerLayers" class="beaker-layers"></div>
+              <div id="beakerMixedColor" class="beaker-mixed-color"></div>
+            </div>
+            <div id="beakerBubbles" class="game7-beaker-bubbles"></div>
+            <div id="stirRod" class="stir-rod"><span class="stir-rod-knob"></span></div>
+          </div>
+          <div class="game7-beaker-info">
+            <div id="beakerVolume" class="game7-beaker-volume">0 / 100 ml</div>
+            <div id="beakerRatio" class="game7-beaker-ratio"></div>
+          </div>
+        </div>
+        <div class="game7-beaker-actions">
+          <button id="btnStir" class="btn btn-primary">🌀 Khuấy</button>
+          <button id="btnCheck" class="btn btn-primary hidden">✅ Kiểm tra</button>
+          <button id="btnResetBeaker" class="btn btn-secondary">🔄 Đổ hết</button>
+        </div>
+      </section>
+    </div>
+
+    <section id="paintPanel" class="game7-paint hidden">
+      <h3 class="game7-panel-title">Chọn tranh và tô màu</h3>
+      <div id="paintPicker" class="game7-paint-picker"></div>
+      <div id="paintCanvasWrap" class="game7-paint-canvas-wrap hidden"></div>
+    </section>
+
+    <div id="game7Feedback" class="quiz-result hidden"></div>
+  </main>
+
+  <div id="colorBookModal" class="modal hidden">
+    <div class="modal-card game7-colorbook-card">
+      <h2>📖 Sổ Tay Màu Sắc</h2>
+      <div id="colorBookList" class="game7-colorbook-list"></div>
+      <div class="form-actions">
+        <button id="closeColorBook" class="btn btn-primary">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="achievementsModal" class="modal hidden">
+    <div class="modal-card">
+      <h2>🏆 Thành Tích</h2>
+      <div id="achievementsList" class="game7-achievements-list"></div>
+      <div class="form-actions">
+        <button id="closeAchievements" class="btn btn-primary">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="resultModal" class="modal hidden">
+    <div class="modal-card win-card">
+      <h2 id="resultTitle">🎉 Kết quả</h2>
+      <div id="resultStars" class="game7-stars"></div>
+      <p id="resultDetail"></p>
+      <div class="form-actions">
+        <button id="resultNext" class="btn btn-primary">Màu tiếp theo</button>
+        <button id="resultRetry" class="btn btn-secondary">Thử lại</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="unlockModal" class="modal hidden">
+    <div class="modal-card win-card">
+      <h2>🔓 Mở khóa mới!</h2>
+      <p id="unlockText"></p>
+      <div class="form-actions">
+        <button id="closeUnlock" class="btn btn-primary">Tuyệt vời!</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="discoveryToast" class="game7-discovery-toast hidden">
+    <div class="game7-discovery-swatch" id="discoverySwatch"></div>
+    <div>
+      <div class="game7-discovery-title" id="discoveryTitle">🎉 Bạn vừa khám phá:</div>
+      <div id="discoveryName" class="game7-discovery-name"></div>
+    </div>
+  </div>
+
+  <script type="module" src="js/game7.js"></script>
+</body>
+</html>
